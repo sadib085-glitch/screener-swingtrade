@@ -1,0 +1,7 @@
+
+services:
+  - type: web
+    name: screener-swingtrade
+    env: python
+    buildCommand: ""
+    startCommand: "python server.py"

@@ -1,0 +1,40 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Screener Saham - Swing Trade</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body { font-family: Arial; padding: 20px; }
+    input, button { padding: 10px; margin: 5px; }
+    #result { margin-top: 20px; }
+  </style>
+</head>
+<body>
+  <h2>Screener Saham Swing Trade</h2>
+  <input type="text" id="ticker" placeholder="Masukkan kode saham (cth: BBCA)" />
+  <button onclick="checkSaham()">Cek Saham</button>
+  <div id="result"></div>
+
+  <script>
+    async function checkSaham() {
+      const ticker = document.getElementById('ticker').value;
+      const response = await fetch('/api/screener', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ticker })
+      });
+      const data = await response.json();
+      document.getElementById('result').innerHTML = `
+        <p><strong>Ticker:</strong> ${data.ticker}</p>
+        <p><strong>Entry:</strong> ${data.entry}</p>
+        <p><strong>Take Profit:</strong> ${data.take_profit}</p>
+        <p><strong>Stop Loss:</strong> ${data.stop_loss}</p>
+        <p><strong>Strategy:</strong> ${data.strategy}</p>
+        <p><strong>Waktu:</strong> ${data.timestamp}</p>
+      `;
+    }
+  </script>
+</body>
+</html>
